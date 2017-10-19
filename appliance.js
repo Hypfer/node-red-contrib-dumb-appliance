@@ -5,13 +5,13 @@ module.exports = function(RED) {
 
         this.appliance = new dumbAppliance({
             name: config.name,
-            bufsize: config.bufsize,
-            threshold: config.threshold,
+            bufsize: parseInt(config.bufsize),
+            threshold: parseFloat(config.threshold),
             callback: function(name, state) {
                 node.send({payload: {name: name, state: state}});
             },
-            offToOnThreshold : config.offToOnThreshold,
-            doneToOnThreshold: config.doneToOnThreshold
+            offToOnThreshold : parseFloat(config.offToOnThreshold),
+            doneToOnThreshold: parseFloat(config.doneToOnThreshold)
         });
 
 
@@ -60,7 +60,7 @@ var dumbAppliance = function(options) {
         this.name = "off";
         this.update = function(value) {
             if (value > self.offToOnThreshold) {
-                if (value == self.threshold) {
+                if (value === self.threshold) {
                     return self.state = new self.states.done();
                 }
                 return self.state = new self.states.on();
@@ -71,10 +71,10 @@ var dumbAppliance = function(options) {
     this.states.on = function() {
         this.name = "on";
         this.update = function(value) {
-            if (value == self.threshold) {
+            if (value === self.threshold) {
                 return self.state = new self.states.done();
             }
-            if (value == 0) {
+            if (value === 0) {
                 return self.state = new self.states.off();
             }
         };
@@ -87,7 +87,7 @@ var dumbAppliance = function(options) {
                 if(value > self.doneToOnThreshold) {
                     return self.state = new self.states.on();
                 }
-                if(value == 0) {
+                if(value === 0) {
                     return self.state = new self.states.off();
                 }
             }
