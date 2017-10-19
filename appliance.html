@@ -1,0 +1,52 @@
+<script type="text/javascript">
+    RED.nodes.registerType('dumb-appliance',{
+        category: 'function',
+        color: '#a6bbcf',
+        defaults: {
+            name: {value:"", required: true},
+            threshold: {value: 0, required: true, validate:RED.validators.number()},
+            bufsize: {value: 5, required: true, validate:RED.validators.number()},
+            offToOnThreshold: {value: 0, validate:RED.validators.number()},
+            doneToOnThreshold: {value: 0, validate:RED.validators.number()}
+        },
+        inputs:1,
+        outputs:1,
+        icon: "file.png",
+        label: function() {
+            return this.name||"dumb-appliance";
+        }
+    });
+</script>
+
+<script type="text/x-red" data-template-name="dumb-appliance">
+    <div class="form-row">
+        <label for="node-input-name"><i class="icon-tag"></i> Name</label>
+        <input type="text" id="node-input-name" placeholder="Name">
+    </div>
+    <div class="form-row">
+        <label for="node-input-threshold"><i class="icon-tag"></i> Threshold</label>
+        <input type="text" id="node-input-threshold" placeholder="1640">
+    </div>
+    <div class="form-row">
+        <label for="node-input-bufsize"><i class="icon-tag"></i> Bufsize</label>
+        <input type="text" id="node-input-bufsize" placeholder="5">
+    </div>
+    <div class="form-row">
+        <label for="node-input-offToOnThreshold"><i class="icon-tag"></i> offToOnThreshold</label>
+        <input type="text" id="node-input-off-to-on-threshold" placeholder="0">
+    </div>
+    <div class="form-row">
+        <label for="node-input-doneToOnThreshold"><i class="icon-tag"></i> doneToOnThreshold</label>
+        <input type="text" id="node-input-done-to-on-threshold" placeholder="0">
+    </div>
+</script>
+
+<script type="text/x-red" data-help-name="dumb-appliance">
+    <p>A node that tries to guess the state a machine is in by its power consumption.</p>
+    <h3>There are three possible states</h3>
+    <ol>
+        <li>Off</li>
+        <li>On</li>
+        <li>Done</li>
+    </ol>
+</script>
