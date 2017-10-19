@@ -16,7 +16,7 @@ module.exports = function(RED) {
 
 
         node.on('input', function(msg) {
-            if(msg.payload["watt"]) {
+            if(msg.payload["watt"] !== undefined) {
                 node.appliance.update(msg.payload["watt"]);
             }
         });
